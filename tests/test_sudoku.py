@@ -11,6 +11,7 @@ def test_read_board():
     from app.workers import read_board_from_txt
     assert read_board_from_txt(TEST_BOARD_PATH).size==81
 
+
 def test_get_quad():
     test_read_board()
     from app.workers import get_quad, df
