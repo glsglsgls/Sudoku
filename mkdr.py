@@ -1,1 +1,5 @@
-print('what the hell is going on')
+<<<<<<< HEAD
+print('nothing to do here')
+=======
+print('nothing to do here')
+>>>>>>> database_integration
