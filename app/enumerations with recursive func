@@ -1,0 +1,94 @@
+from kiwisolver import Solver
+import numpy as np
+
+
+class SOlver:
+    def __init__(self, board):
+        self.board = board
+
+    def empty(self):
+        for i in range(9):
+            for j in range(9):
+                if self.board[i][j] == 0:
+                    return i, j
+        return None
+            
+    def isValid(self, num, row, col):
+        #Checking row and col
+        for i in range(9):
+            if self.board[row][i] == num and i != col:
+                return False
+            if self.board[i][col] == num and i != row:
+                return False
+        #Checking the boxes
+        y = row // 3
+        x = col // 3
+        for i in range(y*3, y*3 + 3):
+            for j in range(x*3, x*3 + 3):
+                if self.board[i][j] == num and (i != row or j != col):
+                    return False
+        return True
+
+    def solve(self):
+        pos = self.empty()
+        if pos == None:
+            return True # exit when board is filled up
+        
+        row, col = pos
+            
+        for i in range(1, 10):
+            self.board[row][col] = i
+            if self.isValid(i, row, col) and self.solve():
+                return True  
+            else:
+                self.board[row][col] = 0
+
+        return False
+			
+
+# table=(
+#     3,1,0,4,0,0,0,8,0,
+#     9,6,0,0,0,0,0,0,4,
+#     0,8,4,0,0,0,3,0,0,
+#     0,0,3,0,7,1,8,4,0,
+#     4,7,1,0,0,0,0,3,5,
+#     8,0,6,0,3,4,1,2,7,
+#     6,5,0,0,0,0,4,0,0,
+#     1,4,0,0,9,5,7,6,0,
+#     7,3,0,0,4,0,0,0,0
+# )
+
+# table = (
+#     0,9,0,0,0,0,3,0,8,
+#     0,0,3,5,9,0,6,0,0,
+#     0,0,0,0,0,0,7,0,0,
+#     0,0,2,8,0,0,0,0,5,
+#     0,1,0,3,0,0,0,0,0,
+#     4,0,0,0,0,6,0,8,1,
+#     5,0,0,0,2,7,0,0,0,
+#     0,0,9,0,0,0,0,0,0,
+#     0,0,0,0,1,0,0,6,0
+# ) # sudoku.com - expert level
+
+table = (
+    9,0,0,0,5,0,0,0,0,
+    0,5,3,7,0,0,0,8,0,
+    4,0,0,0,0,0,0,0,3,
+    0,9,0,0,0,0,0,0,0,
+    0,8,5,0,6,0,0,0,1,
+    0,0,0,4,0,0,6,0,0,
+    0,6,1,0,4,0,0,0,8,
+    0,0,0,0,0,2,0,7,0,
+    3,0,0,0,0,0,0,0,0,
+)
+
+board = np.array(table).reshape((9, 9))
+slv = SOlver(board)
+slv.solve()
+print(slv.board)
+
+
+
+
+
+
